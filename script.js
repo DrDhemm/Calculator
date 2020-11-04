@@ -20,6 +20,21 @@ const updatePreview = (prev) => {
   calcPreview.value = prev;
 };
 
+const debug = () => {
+  console.log(
+    "currPrev",
+    currPrev,
+    "currNumber",
+    currNumber,
+    "prevNumber",
+    prevNumber,
+    "lastOperator",
+    lastOperator,
+    "calcOperator",
+    calcOperator
+  );
+};
+
 const inputNumber = (num) => {
   if (currNumber == "0") {
     currNumber = num;
@@ -29,7 +44,19 @@ const inputNumber = (num) => {
 };
 
 const inputOperator = (ope) => {
-  if (calcOperator === "") {
+  if (
+    (currNumber === "" && prevNumber === "") ||
+    (currNumber === "0" && prevNumber === "")
+  ) {
+    return;
+  } else if (calcOperator != "") {
+    currPrev = currPrev.slice(0, -1);
+    currPrev += ope;
+    updatePreview(currPrev);
+
+    calcOperator = ope;
+    return;
+  } else if (calcOperator === "") {
     prevNumber = currNumber;
     calcOperator = ope;
 
@@ -37,9 +64,7 @@ const inputOperator = (ope) => {
     updatePreview(currPrev);
 
     currNumber = "";
-    // updateScreen(currNumber);
-    return;
-  } else if (currNumber === "" || currNumber === "0") {
+    debug();
     return;
   } else if (currNumber !== "" && calcOperator !== "" && prevNumber !== "") {
     prevNumber = calc();
@@ -49,7 +74,6 @@ const inputOperator = (ope) => {
     updatePreview(currPrev);
 
     currNumber = "";
-    // updateScreen(currNumber);
     return;
   }
 };
@@ -121,17 +145,19 @@ eqSign.addEventListener("click", () => {
 
     calcOperator = "";
     updateScreen(currNumber);
-    return
+    return;
+  } else if (calcOperator === "" && prevNumber === "" || prevNumber === "0" && currNumber === "" || currNumber === "0") {
+    return;
   }
   currPrev += ` ${currNumber} =`;
   updatePreview(currPrev);
 
   currNumber = calc();
-  lastOperator = calcOperator
+  lastOperator = calcOperator;
   calcOperator = "";
 
   updateScreen(currNumber);
-  console.log(currPrev, currNumber, prevNumber, lastOperator, calcOperator);
+  debug();
 });
 
 clrAll.addEventListener("click", () => {
