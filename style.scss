@@ -1,33 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Coda:wght@400;800&display=swap");
+
+* {
+  user-select: none;
+}
+
+body {
+  overflow: hidden;
+  background-color: #525050;
+  color: rgba(245, 245, 245, 0.411);
+}
+
+.info {
+  font-family: "Coda", cursive;
+  .colorscheme {
+    &::after {
+      content: "Dark Mode";
+    }
+  }
+
+  button {
+    margin-top: 0.8em;
+    background-color: transparent;
+    color: rgba(245, 245, 245, 0.411);
+    outline: none;
+    border: 1px solid rgba(245, 245, 245, 0.411);
+    padding: 0.4em 0.5em;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+
+    &:hover {
+      background-color: rgba(245, 245, 245, 0.411);
+      color: #525050;
+    }
+
+    &:active {
+      box-shadow: inset 0px 0px 23px 5px rgba(82, 80, 80, 0.6);
+    }
+  }
+}
+
 .calculator {
-  // text-align: center;
-  // margin: 0 auto;
-  padding: 25px 5px 5px;
-  width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0px 5px 5px;
+  width: 250px;
   background-color: rgba(37, 36, 36, 0.938);
   border-radius: 5px;
   cursor: move;
 
+  .calculator-screen-container,
+  .calculator-keys {
+  }
+
+  .handle {
+    height: 25px;
+    // cursor: move;
+    // width: 100%;
+  }
+
   .calculator-screen-container {
     background-color: #252525;
-    .calculator-screen, .calculator-preview {
+    .calculator-screen,
+    .calculator-preview {
       background-color: transparent;
       width: 100%;
       text-align: right;
       border: none;
-      padding: 0 20px;
+      padding: 0 10px;
       box-sizing: border-box;
+      font-family: "Coda", cursive;
     }
-    
+
     .calculator-screen {
-        font-size: 36px;
-        height: 80px;
-        color: white;
+      font-size: 2rem;
+      height: 50px;
+      color: white;
     }
-    
+
     .calculator-preview {
-        color: grey;
-        font-size: 15px;
-        height: 50px;
+      color: grey;
+      font-size: 0.8rem;
+      height: 30px;
     }
   }
 
@@ -39,10 +94,10 @@
 
       button {
         transition: background-color 0.1s ease-in-out;
-        height: 80px;
+        height: 50px;
         background-color: gray;
         border: 1px solid black;
-        font-size: 32px;
+        font-size: 1rem;
         color: white;
         width: 25%;
         outline: none;
@@ -71,6 +126,82 @@
 
         &:active {
           background-color: orange;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (prefers-color-scheme: light) {
+  body {
+    background-color: white;
+    color: rgba(#525050, 0.411);
+  }
+
+  .info {
+    .colorscheme {
+      &::after {
+        content: "Light Mode";
+      }
+    }
+
+    button {
+      color: rgba(#525050, 0.411);
+      border: 1px solid rgba(#525050, 0.411);
+  
+      &:hover {
+        background-color: rgba(#525050, 0.411);
+        color: white;
+      }
+  
+      &:active {
+        box-shadow: inset 0px 0px 23px 5px rgba(white, 0.6);
+      }
+    }
+  }
+
+  .calculator {
+    background-color: rgba(231, 228, 228, 0.938);
+
+    .calculator-screen-container {
+      background-color: #a3a2a2;
+
+      .calculator-screen {
+        color: rgb(36, 35, 35);
+      }
+
+      .calculator-preview {
+        color: rgb(65, 64, 64);
+      }
+    }
+
+    .calculator-keys {
+      .row {
+        button {
+          background-color: rgb(124, 123, 123);
+          border: 1px solid rgb(167, 166, 166);
+          color: white;
+
+          &:hover {
+            background-color: darkgray;
+          }
+
+          &:active {
+            background-color: gray;
+          }
+        }
+
+        .operator,
+        .equal-sign {
+          background-color: orange;
+
+          &:hover {
+            background-color: darkorange;
+          }
+
+          &:active {
+            background-color: orange;
+          }
         }
       }
     }

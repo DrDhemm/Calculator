@@ -6,6 +6,9 @@ const eqSign = document.querySelector(".equal-sign");
 const clrAll = document.querySelector(".all-clear");
 const clrOne = document.querySelector(".once-clear");
 const decimal = document.querySelector(".decimal");
+const calcBody = document.querySelector(".calculator");
+const calcHandle = document.querySelector(".handle");
+const resetBut = document.querySelector(".reset");
 
 let prevNumber = "",
   calcOperator = "",
@@ -40,9 +43,9 @@ const inputNumber = (num) => {
   if (currNumber == "0") {
     if (currPrev.slice(-1) == "-") {
       currNumber = `-${num}`;
-      currPrev = ""
-      updatePreview(currPrev)
-      return
+      currPrev = "";
+      updatePreview(currPrev);
+      return;
     }
     currNumber = num;
   } else {
@@ -269,3 +272,37 @@ decimal.addEventListener("click", (e) => {
   inputDec(e.target.value);
   updateScreen(currNumber);
 });
+
+// Draggable Div
+
+window.onload = function () {
+  draggable(calcBody);
+  reset(resetBut, calcBody);
+};
+
+function reset(el1, el2) {
+  el1.addEventListener("click", () => {
+    el2.style.top = "50%";
+    el2.style.left = "50%";
+  });
+}
+
+function draggable(el) {
+  el.addEventListener("mousedown", function (e) {
+    var offsetX = e.clientX - parseInt(window.getComputedStyle(this).left);
+    var offsetY = e.clientY - parseInt(window.getComputedStyle(this).top);
+
+    function mouseMoveHandler(e) {
+      el.style.top = e.clientY - offsetY + "px";
+      el.style.left = e.clientX - offsetX + "px";
+    }
+
+    function reset() {
+      window.removeEventListener("mousemove", mouseMoveHandler);
+      window.removeEventListener("mouseup", reset);
+    }
+
+    window.addEventListener("mousemove", mouseMoveHandler);
+    window.addEventListener("mouseup", reset);
+  });
+}
